@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Chart GUI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<link
+	href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"
+	rel="stylesheet">
+<script
+	src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./Chart.js"></script>
+<script type="text/javascript" src="./Moment.js"></script>
+<script>
+  $(function(){
+    $( "#startdate" ).datepicker({
+      defaultDate: "-1d",
+      changeMonth: true,
+      numberOfMonths: 1,
+      onClose: function( selectedDate ) {
+        $( "#enddate" ).datepicker( "option", "minDate", selectedDate );
+      }
+    });
+    $( "#enddate" ).datepicker({
+      defaultDate: "+1d",
+      changeMonth: true,
+      numberOfMonths: 1,
+      onClose: function( selectedDate ) {
+        $( "#startdate" ).datepicker( "option", "maxDate", selectedDate );
+      }
+    });
+  });
+  </script>
+</head>
+<body>
+	<div class="navbar">
+		<div class="navbar-inner">
+			<a class="brand" href="#">Chart GUI</a>
+		</div>
+	</div>
+	<div id="main" class="container">
+	<form action="/" id="searchForm">
+	<table>
+        <tr>
+            <td></td>
+            <td align="center">Date</td>
+            <td align="center">Hour</td>
+            <td align="center">Minute</td>
+        </tr>
+	<tr>
+		<p>
+			<td>Start:</td><td> <input type="text" id="startdate" name="startdate" ></td>
+			<td>
+				<select name="starthour">
+					<option value="0" selected>0</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+					<option value="13">13</option>
+					<option value="14">14</option>
+					<option value="15">15</option>
+					<option value="16">16</option>
+					<option value="17">17</option>
+					<option value="18">18</option>
+					<option value="19">19</option>
+					<option value="20">20</option>
+					<option value="21">21</option>
+					<option value="22">22</option>
+					<option value="23">23</option>
+				</select>
+			</td>
+			<td>
+				<select name="startminute">
+					<option value="0" selected>00</option>
+					<option value="5">05</option>
+					<option value="10">10</option>
+					<option value="15">15</option>
+					<option value="20">20</option>
+					<option value="25">25</option>
+					<option value="30">30</option>
+					<option value="35">35</option>
+					<option value="40">40</option>
+					<option value="45">45</option>
+					<option value="50">50</option>
+					<option value="55">55</option>
+				</select>
+			</td>
+		</p>
+	</tr>
+	<tr>
+		<p>
+			<td>End:</td><td><input type="text" id="enddate" name="enddate"></td>
+			<td>
+				<select name="endhour">
+					<option value="0" selected>0</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+					<option value="13">13</option>
+					<option value="14">14</option>
+					<option value="15">15</option>
+					<option value="16">16</option>
+					<option value="17">17</option>
+					<option value="18">18</option>
+					<option value="19">19</option>
+					<option value="20">20</option>
+					<option value="21">21</option>
+					<option value="22">22</option>
+					<option value="23">23</option>
+				</select>
+			</td>
+			<td>
+				<select name="endminute">
+					<option value="0" selected>00</option>
+					<option value="5">05</option>
+					<option value="10">10</option>
+					<option value="15">15</option>
+					<option value="20">20</option>
+					<option value="25">25</option>
+					<option value="30">30</option>
+					<option value="35">35</option>
+					<option value="40">40</option>
+					<option value="45">45</option>
+					<option value="50">50</option>
+					<option value="55">55</option>
+				</select>
+   			</select>
+			</td>
+		</p>
+	</tr>
+	<tr>
+		<td>Params</td>
+		<td><input type="radio" name="displayData" value="Humidity" checked>Humidity</td>
+		<td><input type="radio" name="displayData" value="Temperature">Temperature</td>
+		<td><input type="radio" name="displayData" value="Pressure">Pressure</td>
+	</tr>
+<!--	<tr>
+		<td></td>
+		<td><input type="radio" name="displayData" value="AccelX">Acceleration X</td>
+		<td><input type="radio" name="displayData" value="AccelY">Acceleration Y</td>
+		<td><input type="radio" name="displayData" value="AccelZ">Acceleration Z</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input type="radio" name="displayData" value="GyroX">GyroX</td>
+		<td><input type="radio" name="displayData" value="GyroY">GyroY</td>
+		<td><input type="radio" name="displayData" value="GyroZ">GyroZ</td>
+	</tr>
+    <tr>
+		<td></td>
+		<td><input type="radio" name="displayData" value="MagX">Magnetic X</td>
+		<td><input type="radio" name="displayData" value="MagY">Magnetic Y</td>
+		<td><input type="radio" name="displayData" value="MagZ">Magnetic Z</td>
+	</tr>
+    <tr> -->
+		  <td><input type="submit" value="Search"></td>
+          <td><input id="setup" type="button" value="Set Location" onClick="openWindow()"></td>
+	</tr>
+	</table>
+	</form>
+		<canvas id="myChart" width="700" height="500"></canvas>
+		<div id="result"></div>
+		<script type="text/javascript">
+			function draw(labelsArray, dataArray) {
+				var ctx = $("#myChart").get(0).getContext("2d");
+				// set canvas dimensions
+				ctx.canvas.width = 700;
+				ctx.canvas.height = 500;
+
+				var data = {
+					labels : labelsArray,
+					datasets : [ {
+						fillColor : "rgba(151,187,205,0.5)",
+						strokeColor : "rgba(151,187,205,1)",
+						pointColor : "rgba(151,187,205,1)",
+						pointStrokeColor : "#fff",
+						data : dataArray
+					} ]
+				}
+
+				var myNewChart = new Chart(ctx).Line(data);
+			}
+		</script>
+		<script>
+    		var switchValue = "Humidity";
+    		var url = "https://yu20150417j.mybluemix.net/data";
+    
+            $("#setup").click
+            $.ajax({
+    			error: function(xhr, status, error) {
+    				  var err = eval("(" + xhr.responseText + ")");
+    				  alert(err.Message);
+    				}
+    		});
+    		$( "#searchForm" ).submit(function( event ) {
+    			  // Stop form from submitting normally
+    			  event.preventDefault();
+    			 
+    			  // Get some values from elements on the page:
+    			  var $form = $( this ),
+    			    startdtxt = $form.find( "input[name='startdate']" ).val(),
+    			    starthrtxt = $form.find( "select[name='starthour']" ).val(),
+    			    startmintxt = $form.find( "select[name='startminute']" ).val(),
+    			    enddtxt = $form.find( "input[name='enddate']" ).val(),
+    			    endhrtxt = $form.find( "select[name='endhour']" ).val(),
+    			    endmintxt = $form.find( "select[name='endminute']" ).val(),
+    			    displayValue = $form.find( "input[name='displayData']:checked" ).val();
+    			switchValue = displayValue;
+    			
+    			 var startdt = Date.parse(startdtxt) + (parseInt(starthrtxt) * 60 * 60 * 1000) + (parseInt(startmintxt) * 60 * 1000);
+    			 var enddt = Date.parse(enddtxt) + (parseInt(endhrtxt) * 60 * 60 * 1000) + (parseInt(endmintxt) *  60 * 1000);
+    			  
+    			 $.ajaxSetup({contentType: "application/json; charset=utf-8"});
+    			  // Send the data using post
+    			  var posting = $.get( url, {start: startdt, end: enddt});
+    			  
+    			  // Parse out the results
+    			  posting.done(function( data ) {
+    				// assume the data is an array of Javascript objects
+    				// should also deal with the empty case here and inform the user
+                    console.log(data);
+    				var length = data.length;
+    				if (length != 0) {
+    					var maximum = 25;
+    					var increment = (length <= maximum) ? 1 : Math.round(length/maximum);
+    					var totalsize = (length <= maximum) ? length : maximum;
+    					var timeArray  =new Array(totalsize); //Instantiate the array with totalsize of data
+    					var humidArray =new Array(totalsize);
+    					var tempArray  =new Array(totalsize);
+    					var pressArray =new Array(totalsize);
+//   					var accelXArray=new Array(totalsize);
+//    					var accelYArray=new Array(totalsize);
+//    					var accelZArray=new Array(totalsize);
+//    					var gyroXArray =new Array(totalsize);
+//    					var gyroYArray =new Array(totalsize);
+//    					var gyroZArray =new Array(totalsize);
+//    					var magXArray  =new Array(totalsize);
+//    					var magYArray  =new Array(totalsize);
+//    					var magZArray  =new Array(totalsize);
+    					for (var i = 0; i < totalsize; i++) {
+                            if (data.length -1 < i*increment) {break;}
+    						var current = data[i*increment];
+    						timeArray[i] = moment(current.payload.d.time).format('MM-DD-YY HH:mm');
+    						humidArray[i]  = current.payload.d.humidity;
+    						tempArray[i]   = current.payload.d.objectTemp;//getting information of each parameters
+    				    	pressArray[i]  = current.payload.d.pressure;
+//    				    	accelXArray[i] = current.payload.d.accelX;
+//    				    	accelYArray[i] = current.payload.d.accelY;
+//    				    	accelZArray[i] = current.payload.d.accelZ;
+//    				    	gyroXArray[i]  = current.payload.d.gyroX;
+//    				    	gyroYArray[i]  = current.payload.d.gyroY;
+//    				    	gyroZArray[i]  = current.payload.d.gyroZ;
+//    				    	magXArray[i]   = current.payload.d.magX;
+//    				    	magYArray[i]   = current.payload.d.magY;
+//    				    	magZArray[i]   = current.payload.d.magZ;
+                        }
+    					console.log(timeArray);
+    					console.log(humidArray);
+    					switch(switchValue) {
+    						case "Temperature":  
+    							draw(timeArray,tempArray);
+    							break;
+    						case "Pressure":
+    							draw(timeArray,pressArray);
+    							break;
+//    						case "AccelX":
+//    							draw(timeArray,accelXArray);
+//    							break;
+//    						case "AccelY":
+//    							draw(timeArray,accelYArray);
+//    							break;
+//    						case "AccelZ":
+//    							draw(timeArray,accelZArray);
+//    							break;
+//    						case "GyroX":
+//    							draw(timeArray,gyroXArray);
+//    							break;
+//    						case "GryoY":
+//    							draw(timeArray,gyroYArray);
+//    							break;
+//    						case "GyroZ":
+//    							draw(timeArray,gyroZArray);
+//    							break;
+//    						case "MagX":
+//    							draw(timeArray,magXArray);
+//    							break;
+//    						case "MagY":
+//    							draw(timeArray,magYArray);
+//    							break;
+//    						case "MagZ":
+//    							draw(timeArray,magZArray);
+//    							break;
+    					default:
+    							draw(timeArray, humidArray);
+    					}
+    							
+    				} else {
+    				console.log("no data");
+    				}
+    			  }).fail(function() {
+    				    alert( "error" );
+    			  });
+    			});
+			</script>
+            <script>
+                function openWindow() {
+                    var sw= parseInt(screen.availWidth);
+                    var leftPos = sw - 300 -10;
+                    url = prompt("Enter full URL for");
+                }
+            </script>
+	</div>
+</body>
+</html>
