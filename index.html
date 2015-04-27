@@ -154,7 +154,7 @@
 		<td>Params</td>
 		<td><input type="radio" name="displayData" value="Humidity" checked>Humidity</td>
 		<td><input type="radio" name="displayData" value="Temperature">Temperature</td>
-		<td><input type="radio" name="displayData" value="Pressure">Pressure</td>
+        <!--	<td><input type="radio" name="displayData" value="Pressure">Pressure</td> -->
 	</tr>
 <!--	<tr>
 		<td></td>
@@ -200,6 +200,7 @@
 					} ]
 				}
 
+                //上記で設定したデータ描画
 				var myNewChart = new Chart(ctx).Line(data);
 			}
 		</script>
@@ -240,7 +241,6 @@
     			  posting.done(function( data ) {
     				// assume the data is an array of Javascript objects
     				// should also deal with the empty case here and inform the user
-                    console.log(data);
     				var length = data.length;
     				if (length != 0) {
     					var maximum = 25;
@@ -249,7 +249,7 @@
     					var timeArray  =new Array(totalsize); //Instantiate the array with totalsize of data
     					var humidArray =new Array(totalsize);
     					var tempArray  =new Array(totalsize);
-    					var pressArray =new Array(totalsize);
+//    					var pressArray =new Array(totalsize);
 //   					var accelXArray=new Array(totalsize);
 //    					var accelYArray=new Array(totalsize);
 //    					var accelZArray=new Array(totalsize);
@@ -265,7 +265,7 @@
     						timeArray[i] = moment(current.payload.d.time).format('MM-DD-YY HH:mm');
     						humidArray[i]  = current.payload.d.humidity;
     						tempArray[i]   = current.payload.d.objectTemp;//getting information of each parameters
-    				    	pressArray[i]  = current.payload.d.pressure;
+//    				    	pressArray[i]  = current.payload.d.pressure;
 //    				    	accelXArray[i] = current.payload.d.accelX;
 //    				    	accelYArray[i] = current.payload.d.accelY;
 //    				    	accelZArray[i] = current.payload.d.accelZ;
@@ -278,13 +278,14 @@
                         }
     					console.log(timeArray);
     					console.log(humidArray);
-    					switch(switchValue) {
+    				    //横軸に時間、縦軸にラジオボタンで選択したパラメータを描画
+                        switch(switchValue) {
     						case "Temperature":  
     							draw(timeArray,tempArray);
     							break;
-    						case "Pressure":
-    							draw(timeArray,pressArray);
-    							break;
+//    						case "Pressure":
+//    							draw(timeArray,pressArray);
+//    							break;
 //    						case "AccelX":
 //    							draw(timeArray,accelXArray);
 //    							break;
